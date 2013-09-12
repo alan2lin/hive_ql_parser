@@ -1,0 +1,688 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+pre
+	{mso-style-link:"HTML 预设格式 Char";
+	margin-top:7.5pt;
+	margin-right:0cm;
+	margin-bottom:7.5pt;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:宋体;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"批注框文本 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+span.HTMLChar
+	{mso-style-name:"HTML 预设格式 Char";
+	mso-style-link:"HTML 预设格式";
+	font-family:宋体;}
+span.Char1
+	{mso-style-name:"批注框文本 Char";
+	mso-style-link:批注框文本;}
+ /* Page Definitions */
+ @page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN style='text-justify-trim:punctuation'>
+
+<div class=Section1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hive</span><span
+style='font-size:14.0pt;font-family:宋体'>词法语法解析分析</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+</span><span style='font-size:14.0pt;font-family:宋体'>我们知道</span><span
+lang=EN-US style='font-size:14.0pt'> hive</span><span style='font-size:14.0pt;
+font-family:宋体'>是一个基于</span><span lang=EN-US style='font-size:14.0pt'>hadoop</span><span
+style='font-size:14.0pt;font-family:宋体'>上面提供了类</span><span lang=EN-US
+style='font-size:14.0pt'>sql</span><span style='font-size:14.0pt;font-family:
+宋体'>的接口的组件，以方便熟悉</span><span lang=EN-US style='font-size:14.0pt'>sql</span><span
+style='font-size:14.0pt;font-family:宋体'>的人使用</span><span lang=EN-US
+style='font-size:14.0pt'>hadoop</span><span style='font-size:14.0pt;font-family:
+宋体'>，对大数据的处理。限于精力，本文只关注</span><span lang=EN-US style='font-size:14.0pt'>hive</span><span
+style='font-size:14.0pt;font-family:宋体'>所提供的语法，它解析语法的过程，以及生成执行计划和优化这几个过程。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>分析对象</span><span
+lang=EN-US style='font-size:14.0pt'>:hive</span><span style='font-size:14.0pt;
+font-family:宋体'>源代码，版本</span><span lang=EN-US style='font-size:14.0pt'>Revision
+1522497</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>需要用到的工具：</span><span
+lang=EN-US style='font-size:14.0pt'> svn ant&nbsp; antlr-3.5-complete.jar</span><span
+style='font-size:14.0pt;font-family:宋体'>，</span><span lang=EN-US
+style='font-size:14.0pt'>antlrworks-1.4.2.jar</span><span style='font-size:
+14.0pt;font-family:宋体'>，</span><span lang=EN-US style='font-size:14.0pt'>eclipse</span><span
+style='font-size:14.0pt;font-family:宋体'>。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>注：在</span><span
+lang=EN-US style='font-size:14.0pt'>http://www.antlr3.org/download.html&nbsp; </span><span
+style='font-size:14.0pt;font-family:宋体'>可以下载</span><span lang=EN-US
+style='font-size:14.0pt'>antlr-3.5-complete.jar</span><span style='font-size:
+14.0pt;font-family:宋体'>，</span><span lang=EN-US style='font-size:14.0pt'>antlrworks-1.4.2.jar.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>hive</span><span
+style='font-size:14.0pt;font-family:宋体'>中使用到的</span><span lang=EN-US
+style='font-size:14.0pt'>antlr</span><span style='font-size:14.0pt;font-family:
+宋体'>是</span><span lang=EN-US style='font-size:14.0pt'> v3.4</span><span
+style='font-size:14.0pt;font-family:宋体'>版本的，</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>但使用</span><span
+lang=EN-US style='font-size:14.0pt'>v3.5</span><span style='font-size:14.0pt;
+font-family:宋体'>没有问题，但请别使用</span><span lang=EN-US style='font-size:14.0pt'>v4.0</span><span
+style='font-size:14.0pt;font-family:宋体'>的。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>下载源代码</span><span
+lang=EN-US style='font-size:14.0pt'>,</span><span style='font-size:14.0pt;
+font-family:宋体'>并编译</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>svn co http://svn.apache.org/repos/asf/hive/trunk
+hive</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>cd hive</span></p>
+
+<pre style='background:white'><span lang=EN-US style='font-size:14.0pt;
+font-family:"Calibri","sans-serif"'>ant clean package eclipse-files</span></pre>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>最后一个是为了方便导入成</span><span
+lang=EN-US style='font-size:14.0pt'>eclipse</span><span style='font-size:14.0pt;
+font-family:宋体'>项目，有些人是喜欢用</span><span lang=EN-US style='font-size:14.0pt'>eclipse</span><span
+style='font-size:14.0pt;font-family:宋体'>查看源代码。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>搜索</span><span
+lang=EN-US style='font-size:14.0pt'> .g</span><span style='font-size:14.0pt;
+font-family:宋体'>的位置</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>find ./ -name
+&quot;*.g&quot;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>会得到</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/FromClauseParser.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/SelectClauseParser.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/HiveParser.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/IdentifiersParser.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/HiveLexer.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./metastore/src/java/org/apache/hadoop/hive/metastore/parser/Filter.g</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>基本可以确定了</span><span
+lang=EN-US style='font-size:14.0pt'> ql</span><span style='font-size:14.0pt;
+font-family:宋体'>下面就是需要找到东西。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>find . -name
+&quot;*.java&quot; |xargs grep &quot;HiveLexer &quot;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>找到两处</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./build/ql/gen/antlr/gen-java/org/apache/hadoop/hive/ql/parse/HiveLexer.java:public
+class HiveLexer extends Lexer {</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>./ql/src/java/org/apache/hadoop/hive/ql/parse/ParseDriver.java:&nbsp;
+public class HiveLexerX extends HiveLexer {</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>其中第一处是编译期构建的，</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>而另外一处是包装了该类。重点可以放到第二处。也即</span><span lang=EN-US style='font-size:14.0pt'>parseDriver</span><span
+style='font-size:14.0pt;font-family:宋体'>类。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>对</span><span
+lang=EN-US style='font-size:14.0pt'>parseDriver</span><span style='font-size:
+14.0pt;font-family:宋体'>类做一个大致的分析，</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>包装了</span><span
+lang=EN-US style='font-size:14.0pt'>antlr</span><span style='font-size:14.0pt;
+font-family:宋体'>的</span><span lang=EN-US style='font-size:14.0pt'>antlrStringStream
+</span><span style='font-size:14.0pt;font-family:宋体'>成为</span><span lang=EN-US
+style='font-size:14.0pt'>antlrnocasestream</span><span style='font-size:14.0pt;
+font-family:宋体'>。消除了大小写敏感。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>包装了词法解析器</span><span
+style='font-size:14.0pt'> <span lang=EN-US>HiveLexer</span></span><span
+style='font-size:14.0pt;font-family:宋体'>，主要是包装了出错信息。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>包装了抽象树节点，主要聚合了</span><span
+lang=EN-US style='font-size:14.0pt'>ASTNodeOrigin </span><span
+style='font-size:14.0pt;font-family:宋体'>以求能获得对象类型，名字，定义，别名，和定义。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>其中</span><span
+lang=EN-US style='font-size:14.0pt'>parser</span><span style='font-size:14.0pt;
+font-family:宋体'>方法是我们重点关注的，它调用词法解析和语法解析。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>察看其所有的调用者的关系形成的路径，找到一条通向</span><span
+lang=EN-US style='font-size:14.0pt'>cli</span><span style='font-size:14.0pt;
+font-family:宋体'>的包的</span><span lang=EN-US style='font-size:14.0pt'>clidriver</span><span
+style='font-size:14.0pt;font-family:宋体'>类</span><span lang=EN-US
+style='font-size:14.0pt'>main</span><span style='font-size:14.0pt;font-family:
+宋体'>方法，（可以通过</span><span lang=EN-US style='font-size:14.0pt'>eclipse</span><span
+style='font-size:14.0pt;font-family:宋体'>的北调用关系反向查看）</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>clidriver.run()
+-&gt;clidriver.executeDriver()-&gt;clidriver.processLine(string,boolean)-&gt;clidriver.processCmd()-&gt;clidriver.processloaclcmd()-&gt;driver.run-&gt;driver.runInternal()-&gt;driver.compile()-&gt;parserdriver.parse</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>而我们知道这也是其中的入口之一。</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>基本上可以快速的确定其所用到的词法语法解析了。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>翻阅几个</span><span
+lang=EN-US style='font-size:14.0pt'>.g</span><span style='font-size:14.0pt;
+font-family:宋体'>文件可以得知</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>HiveLexer.g </span><span
+style='font-size:14.0pt;font-family:宋体'>是做词法分析的，定义了所有用到的</span><span
+lang=EN-US style='font-size:14.0pt'>token</span><span style='font-size:14.0pt;
+font-family:宋体'>。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>HiveParser.g </span><span
+style='font-size:14.0pt;font-family:宋体'>是做语法解析的。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>FromClauseParser.g&nbsp;
+from</span><span style='font-size:14.0pt;font-family:宋体'>从句语法解析</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>SelectClauseParser.g&nbsp;
+select </span><span style='font-size:14.0pt;font-family:宋体'>从句语法解析。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>IdentifiersParser.g&nbsp;
+</span><span style='font-size:14.0pt;font-family:宋体'>不明白为什么叫</span><span
+lang=EN-US style='font-size:14.0pt'>identifier</span><span style='font-size:
+14.0pt;font-family:宋体'>解析，看了一下功能大约是</span><span lang=EN-US style='font-size:
+14.0pt'>groupby having </span><span style='font-size:14.0pt;font-family:宋体'>函数什么的作解析的。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>熟悉</span><span
+lang=EN-US style='font-size:14.0pt'>antlr v3</span><span style='font-size:14.0pt;
+font-family:宋体'>的朋友一般会奇怪，为什么这里的词法语法怎么不是在一个文件，或者词法语法结对出现呢？</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>这里面用到了一种叫</span><span lang=EN-US style='font-size:14.0pt'>composite
+grammars</span><span style='font-size:14.0pt;font-family:宋体'>的技术。</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>这种高级货是</span><span lang=EN-US style='font-size:14.0pt'>antlr v3.1</span><span
+style='font-size:14.0pt;font-family:宋体'>开始引进的。</span><span style='font-size:
+14.0pt'> </span><span style='font-size:14.0pt;font-family:宋体'>是为了解决把所有语法塞入到一个文件里导致编译出来的</span><span
+lang=EN-US style='font-size:14.0pt'>java</span><span style='font-size:14.0pt;
+font-family:宋体'>文件过和逻辑大了之后不容易阅读的问题。它允许在逻辑上把一个大语法划分成几大块，独立实现，然后合并在一起。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>HiveParser.g </span><span
+style='font-size:14.0pt;font-family:宋体'>有一行</span><span lang=EN-US
+style='font-size:14.0pt'>&nbsp; import SelectClauseParser, FromClauseParser,
+IdentifiersParser;&nbsp; </span><span style='font-size:14.0pt;font-family:宋体'>类似于</span><span
+lang=EN-US style='font-size:14.0pt'> c</span><span style='font-size:14.0pt;
+font-family:宋体'>中的</span><span lang=EN-US style='font-size:14.0pt'> include SelectClauseParser.g,
+FromClauseParser.g, IdentifiersParser.g</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>分析一个词法语法的实现，最好的方式是跟随着语法规则走读一边逐一标注。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>当然，更快捷有效的方式是在静态分析方面使用一些可视化的工具来察看语法结构如语法图，在动态分析方面察看相关的具体语法树的构建过程以及抽象语法树构建过程</span><span
+lang=EN-US style='font-size:14.0pt'>(</span><span style='font-size:14.0pt;
+font-family:宋体'>如果可能有抽象语法树的话</span><span lang=EN-US style='font-size:14.0pt'>)</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>具体的使用初学者请参照</span><span
+style='font-size:14.0pt'> </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>http://www.github.com/alan2lin/hand_in_hand_with_antlr</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>中的安装与使用。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>hivelexer</span><span
+style='font-size:14.0pt;font-family:宋体'>不需要关注太多，就是识别关键字和</span><span
+lang=EN-US style='font-size:14.0pt'>token</span><span style='font-size:14.0pt;
+font-family:宋体'>的，重点是</span><span lang=EN-US style='font-size:14.0pt'>
+hiveparser</span><span style='font-size:14.0pt;font-family:宋体'>。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>关于</span><span
+lang=EN-US style='font-size:14.0pt'>antlr</span><span style='font-size:14.0pt;
+font-family:宋体'>语法规范，详细请参见</span><span lang=EN-US style='font-size:14.0pt'>
+hand in hand with antlr</span><span style='font-size:14.0pt;font-family:宋体'>中的语法规范的翻译。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>这里只做简单的介绍，以便没有基础的人也可以读懂。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>parser grammar
+HiveParser;&nbsp; &nbsp;&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>标准格式</span><span style='font-size:14.0pt'>
+<span lang=EN-US>parser grammar </span></span><span style='font-size:14.0pt;
+font-family:宋体'>后面跟语法名。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>options //</span><span
+style='font-size:14.0pt;font-family:宋体'>选项</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>{</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>tokenVocab=HiveLexer;&nbsp;
+//</span><span style='font-size:14.0pt;font-family:宋体'>词汇表来源于</span><span
+style='font-size:14.0pt'> <span lang=EN-US>HiveLexer</span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>output=AST;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+//</span><span style='font-size:14.0pt;font-family:宋体'>输出</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>抽象语法树</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>ASTLabelType=CommonTree;&nbsp;
+//</span><span style='font-size:14.0pt;font-family:宋体'>抽象语法树类型为</span><span
+lang=EN-US style='font-size:14.0pt'> commonTtree</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>backtrack=false;&nbsp;
+//</span><span style='font-size:14.0pt;font-family:宋体'>不回溯</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>k=3;&nbsp;&nbsp;
+//</span><span style='font-size:14.0pt;font-family:宋体'>前向窥看</span><span
+lang=EN-US style='font-size:14.0pt'>3</span><span style='font-size:14.0pt;
+font-family:宋体'>个</span><span lang=EN-US style='font-size:14.0pt'>token</span><span
+style='font-size:14.0pt;font-family:宋体'>的长度。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>}</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>import
+SelectClauseParser, FromClauseParser, IdentifiersParser;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//map</span><span
+style='font-size:14.0pt;font-family:宋体'>建立的过程</span><span lang=EN-US
+style='font-size:14.0pt'>....</span><span style='font-size:14.0pt;font-family:
+宋体'>省略</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>整个规则由</span><span lang=EN-US
+style='font-size:14.0pt'>statement</span><span style='font-size:14.0pt;
+font-family:宋体'>开始。</span><span lang=EN-US style='font-size:14.0pt'> statement </span><span
+style='font-size:14.0pt;font-family:宋体'>由</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>解释语句</span><span
+lang=EN-US style='font-size:14.0pt'>explainStatement</span><span
+style='font-size:14.0pt;font-family:宋体'>或执行语句</span><span lang=EN-US
+style='font-size:14.0pt'>execStatement</span><span style='font-size:14.0pt;
+font-family:宋体'>组成。这种形式叫产生式</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>冒号左边的是左部，作为代表这个产生式规则的符号。</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>冒号右边是右部，</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>连接符号</span><span lang=EN-US
+style='font-size:14.0pt'>&nbsp; | </span><span style='font-size:14.0pt;
+font-family:宋体'>表示</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>右部的组成部分是或者的关系，还有另一种解读的意思是</span><span
+lang=EN-US style='font-size:14.0pt'>:</span><span style='font-size:14.0pt;
+font-family:宋体'>从</span><span lang=EN-US style='font-size:14.0pt'>statement</span><span
+style='font-size:14.0pt;font-family:宋体'>开始，产生了</span><span lang=EN-US
+style='font-size:14.0pt'> explainstatement </span><span style='font-size:14.0pt;
+font-family:宋体'>或者</span><span lang=EN-US style='font-size:14.0pt'>
+execstatement</span><span style='font-size:14.0pt;font-family:宋体'>。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>// starting rule</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>statement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+explainStatement EOF</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+execStatement EOF</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>解释语句</span><span style='font-size:14.0pt'>
+<span lang=EN-US>explainStatement </span></span><span style='font-size:14.0pt;
+font-family:宋体'>由</span><span lang=EN-US style='font-size:14.0pt'>KW_EXPLAIN </span><span
+style='font-size:14.0pt;font-family:宋体'>开始</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>中间有可选项</span><span
+style='font-size:14.0pt'> <span lang=EN-US>KW_EXTENDED</span></span><span
+style='font-size:14.0pt;font-family:宋体'>，</span><span lang=EN-US
+style='font-size:14.0pt'>KW_FORMATTED&nbsp; KW_DEPENDENCY KW_LOGICAL </span><span
+style='font-size:14.0pt;font-family:宋体'>，</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>后面紧跟着</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>执行语句</span><span style='font-size:14.0pt'> </span><span style='font-size:
+14.0pt;font-family:宋体'>。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>通过观测，</span><span
+lang=EN-US style='font-size:14.0pt'>KW_ </span><span style='font-size:14.0pt;
+font-family:宋体'>开始的</span><span lang=EN-US style='font-size:14.0pt'>token</span><span
+style='font-size:14.0pt;font-family:宋体'>代表</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>关键字。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>语法形式</span><span
+lang=EN-US style='font-size:14.0pt'>: </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init </span><span
+style='font-size:14.0pt;font-family:宋体'>表示进入规则时执行后面的</span><span lang=EN-US
+style='font-size:14.0pt'>{}</span><span style='font-size:14.0pt;font-family:
+宋体'>里的动作</span><span style='font-size:14.0pt'> </span><span style='font-size:
+14.0pt;font-family:宋体'>，例中，压入</span><span lang=EN-US style='font-size:14.0pt'>trace</span><span
+style='font-size:14.0pt;font-family:宋体'>的消息。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after{} </span><span
+style='font-size:14.0pt;font-family:宋体'>表示规则完成后执行</span><span lang=EN-US
+style='font-size:14.0pt'>{}</span><span style='font-size:14.0pt;font-family:
+宋体'>里面的动作。</span><span lang=EN-US style='font-size:14.0pt'>&nbsp; </span><span
+style='font-size:14.0pt;font-family:宋体'>例中，弹出</span><span lang=EN-US
+style='font-size:14.0pt'>trace</span><span style='font-size:14.0pt;font-family:
+宋体'>的消息。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>-&gt;</span><span
+style='font-size:14.0pt;font-family:宋体'>构建语法抽象树</span><span lang=EN-US
+style='font-size:14.0pt'> ^(rootnode&nbsp; leafnode1 leafnode2...) </span><span
+style='font-size:14.0pt;font-family:宋体'>如例</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>表示构建一个以</span><span
+style='font-size:14.0pt'> <span lang=EN-US>TOK_EXPLAIN </span></span><span
+style='font-size:14.0pt;font-family:宋体'>为根节点</span><span lang=EN-US
+style='font-size:14.0pt'>&nbsp;&nbsp; execStatement </span><span
+style='font-size:14.0pt;font-family:宋体'>为第一个叶结点，</span><span style='font-size:
+14.0pt'> </span><span style='font-size:14.0pt;font-family:宋体'>可选项为第二个叶结点，如果有可选项的话。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>explainOptions=KW_EXTENDED
+</span><span style='font-size:14.0pt;font-family:宋体'>定义了</span><span
+style='font-size:14.0pt'> <span lang=EN-US>explainOptions</span></span><span
+style='font-size:14.0pt;font-family:宋体'>作为别名引用</span><span lang=EN-US
+style='font-size:14.0pt'>KW_EXTENDED</span><span style='font-size:14.0pt;
+font-family:宋体'>，</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>引用形式为</span><span lang=EN-US
+style='font-size:14.0pt'> $ explainOptions.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>explainStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
+msgs.push(&quot;explain statement&quot;); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
+msgs.pop(); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+KW_EXPLAIN (explainOptions=KW_EXTENDED|explainOptions=KW_FORMATTED|explainOptions=KW_DEPENDENCY|explainOptions=KW_LOGICAL)?
+execStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-&gt; ^(TOK_EXPLAIN execStatement $explainOptions?)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>执行语句</span><span lang=EN-US
+style='font-size:14.0pt'>execStatement </span><span style='font-size:14.0pt;
+font-family:宋体'>由</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>查询，装载，导出，导入，数据定义</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>四大语句据称。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>execStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
+msgs.push(&quot;statement&quot;); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
+msgs.pop(); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+: queryStatementExpression</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+| loadStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+| exportStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+| importStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+| ddlStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>装载语句</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>只关注</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>路径，表或分区，</span><span style='font-size:14.0pt'> </span><span
+style='font-size:14.0pt;font-family:宋体'>是否定义了本地，</span><span style='font-size:
+14.0pt'> </span><span style='font-size:14.0pt;font-family:宋体'>是否定义了重写。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>loadStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
+msgs.push(&quot;load statement&quot;); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
+msgs.pop(); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+: KW_LOAD KW_DATA (islocal=KW_LOCAL)? KW_INPATH (path=StringLiteral)
+(isoverwrite=KW_OVERWRITE)? KW_INTO KW_TABLE (tab=tableOrPartition)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+-&gt; ^(TOK_LOAD $path $tab $islocal? $isoverwrite?)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>导出语句</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>只关注</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>表或分区</span><span style='font-size:14.0pt'> </span><span style='font-size:
+14.0pt;font-family:宋体'>和导出路径</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>exportStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init { msgs.push(&quot;export
+statement&quot;); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
+msgs.pop(); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+: KW_EXPORT KW_TABLE (tab=tableOrPartition) KW_TO (path=StringLiteral)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+-&gt; ^(TOK_EXPORT $tab $path)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>//</span><span
+style='font-size:14.0pt;font-family:宋体'>导入语句</span><span style='font-size:14.0pt'>
+</span><span style='font-size:14.0pt;font-family:宋体'>只关注导入路径，表或着分区，</span><span
+style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
+宋体'>是否是外部</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>importStatement</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
+msgs.push(&quot;import statement&quot;); }</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after { msgs.pop();
+}</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+KW_IMPORT ((ext=KW_EXTERNAL)? KW_TABLE (tab=tableOrPartition))? KW_FROM
+(path=StringLiteral) tableLocation?</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+-&gt; ^(TOK_IMPORT $path $tab? $ext? tableLocation?)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
+;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>以此类推，不再累述。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>这里介绍一种更为直观的的方法，把</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>.g</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>中的语义动作清除，然后用</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>antlrworks</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>查看，并调试。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>在</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>antlrworks</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>中能够以图形的方式展示语法结构</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>(</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>只限于一个规则一个规则的显示图</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>)</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>如</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'><img width=460 height=80 id="图片 1"
+src="hive词法语法解析分析.files/image001.png"></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>或者具体语法分析和生成的语法解析树，</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>例如，官网中的例子</span><span
+style='font-size:14.0pt;font-family:Consolas;color:black'> <span lang=EN-US>SELECT
+a.foo FROM invites a WHERE a.ds='2008-08-15'</span></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>生成的具体语法树</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
+
+<p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
+style='font-size:12.0pt;font-family:宋体'><img width=658 height=582 id="图片 4"
+src="hive词法语法解析分析.files/image002.jpg"></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>生成的抽象语法树</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
+
+<p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
+style='font-size:12.0pt;font-family:宋体'><img width=630 height=365 id="图片 6"
+src="hive词法语法解析分析.files/image003.jpg"></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>要想了解语法，只能逐一解读，别无它法。而这种产生式是最简约的描述信息了，就不重复贴出来了。附件是清理后的</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'> .g</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>文件，可直接使用。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>执行计划的生成与优化</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'> -- to be
+continue.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>参考的引用</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>https://cwiki.apache.org/confluence/display/Hive/GettingStarted</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>https://cwiki.apache.org/confluence/display/Hive/GettingStarted+EclipseSetup</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
