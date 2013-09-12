@@ -110,7 +110,7 @@ HiveParser.g 有一行  import SelectClauseParser, FromClauseParser, Identifier
 
 具体的使用初学者请参照
 
-http://www.github.com/alan2lin/hand\_in\_hand\_with\_antlr
+http://www.github.com/alan2lin/hand_in_hand_with_antlr
 
 中的安装与使用。
 
