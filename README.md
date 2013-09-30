@@ -1,8 +1,44 @@
-                   hive词法语法解析分析（请查看docx版）
+                   hive词法语法解析分析（md版格式已乱 请参考同目录下docx版）
 
-    我们知道 hive是一个基于hadoop上面提供了类sql的接口的组件，以方便熟悉sql的人使用hadoop，对大数据的处理。限于精力，本文只关注hive所提供的语法，它解析语法的过程，以及生成执行计划和优化这几个过程。
+  
+
+[第一章         前言... 1](#_Toc368316516)
+
+[第二章         准备工作... 1](#_Toc368316517)
+
+[第三章         总体概览... 3](#_Toc368316518)
+
+[第一节      hive官方架构图... 3](#_Toc368316519)
+
+[第二节     流程处理图... 3](#_Toc368316520)
+
+[第三节     具体框架图... 5](#_Toc368316521)
+
+[第四章         语法分析... 5](#_Toc368316522)
+
+[第一节     快速定位词法语法分析的位置的常用方法... 5](#_Toc368316523)
+
+[第二节     语法文件之间的关系... 7](#_Toc368316524)
+
+[第三节     静态分析语法文件的方法... 8](#_Toc368316525)
+
+[第四节     动态分析语法文件的方法... 13](#_Toc368316526)
+
+[第五章         语义分析阶段... 15](#_Toc368316527)
+
+[第一节     语义处理模块的关系... 16](#_Toc368316528)
 
  
+
+第一章         前言
+-------------------
+
+   我们知道 hive是一个基于hadoop上面提供了类sql的接口的组件，以方便熟悉sql的人使用hadoop，对大数据的处理。限于精力，本文只关注hive所提供的语法，它解析语法的过程，以及生成执行计划和优化这几个过程。
+
+ 
+
+第二章         准备工作
+-----------------------
 
 分析对象:hive源代码，版本Revision 1522497
 
@@ -10,7 +46,9 @@
 
 注：在http://www.antlr3.org/download.html  可以下载antlr-3.5-complete.jar，antlrworks-1.4.2.jar.
 
-hive中使用到的antlr是 v3.4版本的， 但使用v3.5没有问题，但请别使用v4.0的。
+hive中使用到的antlr是 v3.4版本的，使用v3.5没有问题，但请别使用v4.0的。
+
+ 
 
  
 
@@ -27,6 +65,36 @@ ant clean package eclipse-files
 最后一个是为了方便导入成eclipse项目，有些人是喜欢用eclipse查看源代码。
 
  
+
+第三章         总体概览
+-----------------------
+
+### 第一节         hive官方架构图
+
+![](hive词法语法解析分析.files/image001.jpg)
+
+摘自 hadoop 权威指南
+
+ 
+
+### 第二节         流程处理图
+
+  ![proccess\_flow.dot.png](hive词法语法解析分析.files/image002.png)
+
+这张图是从源代码中剥茧抽丝的出来的抽象，忽略掉了无关紧要的细节。
+
+这张图描述了 hive从解析语句到执行的过程。 后续的内容会以为大纲详细展开。
+
+### 第三节         具体框架图
+
+(待完善)
+
+ 
+
+第四章         语法分析
+-----------------------
+
+### 第一节         快速定位词法语法分析的位置的常用方法
 
 搜索 .g的位置
 
@@ -82,6 +150,8 @@ clidriver.run() -\>clidriver.executeDriver()-\>clidriver.processLine(string,bool
 
  
 
+### 第二节         语法文件之间的关系
+
 翻阅几个.g文件可以得知
 
 HiveLexer.g 是做词法分析的，定义了所有用到的token。
@@ -96,13 +166,19 @@ IdentifiersParser.g  不明白为什么叫identifier解析，看了一下功能
 
  
 
+关系图:
+
+![gfile\_relation.dot.png](hive词法语法解析分析.files/image003.png)
+
+ 
+
 熟悉antlr v3的朋友一般会奇怪，为什么这里的词法语法怎么不是在一个文件，或者词法语法结对出现呢？ 这里面用到了一种叫composite grammars的技术。 这种高级货是antlr v3.1开始引进的。 是为了解决把所有语法塞入到一个文件里导致编译出来的java文件过和逻辑大了之后不容易阅读的问题。它允许在逻辑上把一个大语法划分成几大块，独立实现，然后合并在一起。
 
 HiveParser.g 有一行  import SelectClauseParser, FromClauseParser, IdentifiersParser;  类似于 c中的 include SelectClauseParser.g, FromClauseParser.g, IdentifiersParser.g
 
  
 
- 
+### 第三节         静态分析语法文件的方法
 
 分析一个词法语法的实现，最好的方式是跟随着语法规则走读一边逐一标注。
 
@@ -110,7 +186,7 @@ HiveParser.g 有一行  import SelectClauseParser, FromClauseParser, Identifier
 
 具体的使用初学者请参照
 
-http://www.github.com/alan2lin/hand_in_hand_with_antlr
+http://www.github.com/alan2lin/hand\_in\_hand\_with\_antlr
 
 中的安装与使用。
 
@@ -198,7 +274,7 @@ explainStatement
 
  
 
-//执行语句execStatement 由 查询，装载，导出，导入，数据定义 四大语句据称。
+//执行语句execStatement 由 查询，装载，导出，导入，数据定义 四大语句。
 
  
 
@@ -270,13 +346,15 @@ importStatement
 
 以此类推，不再累述。
 
+### 第四节         动态分析语法文件的方法
+
 这里介绍一种更为直观的的方法，把.g中的语义动作清除，然后用antlrworks查看，并调试。
 
 在antlrworks中能够以图形的方式展示语法结构(只限于一个规则一个规则的显示图)
 
 如
 
-![](hive词法语法解析分析.files/image001.png)
+![](hive词法语法解析分析.files/image004.png)
 
  
 
@@ -286,19 +364,38 @@ importStatement
 
 生成的具体语法树:
 
-![](hive词法语法解析分析.files/image002.jpg)
+![](hive词法语法解析分析.files/image005.jpg)
 
 生成的抽象语法树:
 
-![](hive词法语法解析分析.files/image003.jpg)
+![](hive词法语法解析分析.files/image006.jpg)
 
  
 
 要想了解语法，只能逐一解读，别无它法。而这种产生式是最简约的描述信息了，就不重复贴出来了。附件是清理后的 .g文件，可直接使用。
 
+好吧，如果你真的读完了，你所能得到的也只是hive ql手册能提供的语法功能，当然，额外奖励是，你知道这些功能是如何更具体的被描述的。
+
  
 
-执行计划的生成与优化 -- to be continue.
+第五章         语义分析阶段
+---------------------------
+
+从hive官方结构图也能看出来，driver类是关键。
+
+本章节按照处理流程图中的阶段依次展开。
+
+### 第一节         语义处理模块的关系
+
+语义模块的输入是一个抽象语法树，
+
+输出也是一个抽象语法树，但是被修剪变换过的.
+
+hive采用了工厂模式来实现语义模块之间的关系。
+
+工厂根据抽象语法树的根节点来生产具体的语义处理器。
+
+ 
 
  
 
@@ -307,5 +404,13 @@ importStatement
 https://cwiki.apache.org/confluence/display/Hive/GettingStarted
 
 https://cwiki.apache.org/confluence/display/Hive/GettingStarted+EclipseSetup
+
+ 
+
+ 
+
+ 
+
+ 
 
  

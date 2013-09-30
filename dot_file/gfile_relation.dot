@@ -1,0 +1,26 @@
+digraph G {
+node[fontname="FangSong"];
+edge[fontname="FangSong"];
+graph[fontname="FangSong"];
+
+
+node [style = filled, color = black, shape = box, fillcolor = lightgrey ];
+compound=true;
+subgraph cluster_total{
+label="语法解析文件的关系";
+
+   lexer[label = "HiveLexer.g\n词法解析文件"];
+   parser[label = "HiveParser.g\n语法解析文件"];
+   a[label = "FromClauseParser.g \n from从句语法解析"];
+   b[label = "SelectClauseParser.g \n select 从句语法解析"];
+   c[label = "IdentifiersParser.g"];
+   
+
+   lexer->parser[label="提供token定义"];
+
+   parser->{a,b,c}[dir=back,label="被包含于"];
+    
+
+
+}
+}

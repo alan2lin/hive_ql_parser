@@ -13,6 +13,9 @@
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
 @font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
 @font-face
@@ -24,6 +27,90 @@
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";}
+h1
+	{mso-style-link:"标题 1 Char";
+	margin-top:17.0pt;
+	margin-right:0cm;
+	margin-bottom:16.5pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:240%;
+	page-break-after:avoid;
+	font-size:22.0pt;
+	font-family:"Calibri","sans-serif";}
+h2
+	{mso-style-link:"标题 2 Char";
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:21.25pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.25pt;
+	line-height:173%;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Cambria","serif";}
+h3
+	{mso-style-link:"标题 3 Char";
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:49.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-1.0cm;
+	line-height:173%;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Calibri","sans-serif";}
+h4
+	{mso-style-link:"标题 4 Char";
+	margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:70.9pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-1.0cm;
+	line-height:156%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Cambria","serif";}
+h5
+	{mso-style-link:"标题 5 Char";
+	margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:99.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-35.4pt;
+	line-height:156%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
 	margin-bottom:.0001pt;
 	text-align:justify;
 	text-justify:inter-ideograph;
@@ -46,6 +133,14 @@ p.MsoFooter, li.MsoFooter, div.MsoFooter
 	layout-grid-mode:char;
 	font-size:9.0pt;
 	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+code
+	{font-family:宋体;}
 pre
 	{mso-style-link:"HTML 预设格式 Char";
 	margin-top:7.5pt;
@@ -62,6 +157,26 @@ p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
 	text-justify:inter-ideograph;
 	font-size:9.0pt;
 	font-family:"Calibri","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin-top:24.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Cambria","serif";
+	color:#365F91;
+	font-weight:bold;}
 span.Char
 	{mso-style-name:"页眉 Char";
 	mso-style-link:页眉;}
@@ -75,6 +190,28 @@ span.HTMLChar
 span.Char1
 	{mso-style-name:"批注框文本 Char";
 	mso-style-link:批注框文本;}
+span.2Char
+	{mso-style-name:"标题 2 Char";
+	mso-style-link:"标题 2";
+	font-family:"Cambria","serif";
+	font-weight:bold;}
+span.3Char
+	{mso-style-name:"标题 3 Char";
+	mso-style-link:"标题 3";
+	font-weight:bold;}
+span.4Char
+	{mso-style-name:"标题 4 Char";
+	mso-style-link:"标题 4";
+	font-family:"Cambria","serif";
+	font-weight:bold;}
+span.5Char
+	{mso-style-name:"标题 5 Char";
+	mso-style-link:"标题 5";
+	font-weight:bold;}
+span.1Char
+	{mso-style-name:"标题 1 Char";
+	mso-style-link:"标题 1";
+	font-weight:bold;}
  /* Page Definitions */
  @page Section1
 	{size:595.3pt 841.9pt;
@@ -82,12 +219,17 @@ span.Char1
 	layout-grid:15.6pt;}
 div.Section1
 	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
 -->
 </style>
 
 </head>
 
-<body lang=ZH-CN style='text-justify-trim:punctuation'>
+<body lang=ZH-CN link=blue vlink=purple style='text-justify-trim:punctuation'>
 
 <div class=Section1 style='layout-grid:15.6pt'>
 
@@ -95,10 +237,108 @@ div.Section1
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hive</span><span
 style='font-size:14.0pt;font-family:宋体'>词法语法解析分析</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;
-</span><span style='font-size:14.0pt;font-family:宋体'>我们知道</span><span
-lang=EN-US style='font-size:14.0pt'> hive</span><span style='font-size:14.0pt;
-font-family:宋体'>是一个基于</span><span lang=EN-US style='font-size:14.0pt'>hadoop</span><span
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp; </span></p>
+
+<p class=MsoToc2><span
+lang=EN-US><a href="#_Toc368316516"><span lang=EN-US style='font-family:宋体'><span
+lang=EN-US>第一章</span></span><span style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>前言</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>1</span></a></span></p>
+
+<p class=MsoToc2><span lang=EN-US><a href="#_Toc368316517"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第二章</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>准备工作</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>1</span></a></span></p>
+
+<p class=MsoToc2><span lang=EN-US><a href="#_Toc368316518"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第三章</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>总体概览</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316519"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第一节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>hive<span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>官方架构图</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316520"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第二节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>流程处理图</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316521"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第三节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>具体框架图</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></p>
+
+<p class=MsoToc2><span lang=EN-US><a href="#_Toc368316522"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第四章</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>语法分析</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316523"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第一节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>快速定位词法语法分析的位置的常用方法</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316524"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第二节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>语法文件之间的关系</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316525"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第三节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>静态分析语法文件的方法</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316526"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第四节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>动态分析语法文件的方法</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></p>
+
+<p class=MsoToc2><span lang=EN-US><a href="#_Toc368316527"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第五章</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>语义分析阶段</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>15</span></a></span></p>
+
+<p class=MsoToc3><span lang=EN-US><a href="#_Toc368316528"><span lang=EN-US
+style='font-family:宋体'><span lang=EN-US>第一节</span></span><span
+style='color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>语义处理模块的关系</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>16</span></a></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<h2><a name="_Toc368316516"><span lang=EN-US>第一章<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>前言</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp; </span><span
+style='font-size:14.0pt;font-family:宋体'>我们知道</span><span lang=EN-US
+style='font-size:14.0pt'> hive</span><span style='font-size:14.0pt;font-family:
+宋体'>是一个基于</span><span lang=EN-US style='font-size:14.0pt'>hadoop</span><span
 style='font-size:14.0pt;font-family:宋体'>上面提供了类</span><span lang=EN-US
 style='font-size:14.0pt'>sql</span><span style='font-size:14.0pt;font-family:
 宋体'>的接口的组件，以方便熟悉</span><span lang=EN-US style='font-size:14.0pt'>sql</span><span
@@ -108,6 +348,9 @@ style='font-size:14.0pt'>hadoop</span><span style='font-size:14.0pt;font-family:
 style='font-size:14.0pt;font-family:宋体'>所提供的语法，它解析语法的过程，以及生成执行计划和优化这几个过程。</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<h2><a name="_Toc368316517"><span lang=EN-US>第二章<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>准备工作</span></a></h2>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>分析对象</span><span
 lang=EN-US style='font-size:14.0pt'>:hive</span><span style='font-size:14.0pt;
@@ -131,11 +374,12 @@ style='font-size:14.0pt'>antlr-3.5-complete.jar</span><span style='font-size:
 style='font-size:14.0pt;font-family:宋体'>中使用到的</span><span lang=EN-US
 style='font-size:14.0pt'>antlr</span><span style='font-size:14.0pt;font-family:
 宋体'>是</span><span lang=EN-US style='font-size:14.0pt'> v3.4</span><span
-style='font-size:14.0pt;font-family:宋体'>版本的，</span><span style='font-size:14.0pt'>
-</span><span style='font-size:14.0pt;font-family:宋体'>但使用</span><span
-lang=EN-US style='font-size:14.0pt'>v3.5</span><span style='font-size:14.0pt;
-font-family:宋体'>没有问题，但请别使用</span><span lang=EN-US style='font-size:14.0pt'>v4.0</span><span
+style='font-size:14.0pt;font-family:宋体'>版本的，使用</span><span lang=EN-US
+style='font-size:14.0pt'>v3.5</span><span style='font-size:14.0pt;font-family:
+宋体'>没有问题，但请别使用</span><span lang=EN-US style='font-size:14.0pt'>v4.0</span><span
 style='font-size:14.0pt;font-family:宋体'>的。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
@@ -143,8 +387,8 @@ style='font-size:14.0pt;font-family:宋体'>的。</span></p>
 lang=EN-US style='font-size:14.0pt'>,</span><span style='font-size:14.0pt;
 font-family:宋体'>并编译</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>svn co http://svn.apache.org/repos/asf/hive/trunk
-hive</span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>svn co
+http://svn.apache.org/repos/asf/hive/trunk hive</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>cd hive</span></p>
 
@@ -157,6 +401,46 @@ font-family:宋体'>项目，有些人是喜欢用</span><span lang=EN-US style=
 style='font-size:14.0pt;font-family:宋体'>查看源代码。</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<h2><a name="_Toc368316518"><span lang=EN-US>第三章<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>总体概览</span></a></h2>
+
+<h3><a name="_Toc368316519"><span lang=EN-US>第一节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>hive</span></a><span style='font-family:宋体'>官方架构图</span></h3>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=310
+src="hive词法语法解析分析.files/image001.jpg"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>摘自</span><span lang=EN-US>
+hadoop </span><span style='font-family:宋体'>权威指南</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h3><a name="_Toc368316520"><span lang=EN-US>第二节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>流程处理图</span></a></h3>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp; <img width=617 height=930 id="图片 7"
+src="hive词法语法解析分析.files/image002.png" alt="proccess_flow.dot.png"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>这张图是从源代码中剥茧抽丝的出来的抽象，忽略掉了无关紧要的细节。</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>这张图描述了</span><span lang=EN-US>
+hive</span><span style='font-family:宋体'>从解析语句到执行的过程。</span> <span
+style='font-family:宋体'>后续的内容会以为大纲详细展开。</span></p>
+
+<h3><a name="_Toc368316521"><span lang=EN-US>第三节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>具体框架图</span></a></h3>
+
+<p class=MsoNormal><span lang=EN-US>(</span><span style='font-family:宋体'>待完善</span><span
+lang=EN-US>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<h2><a name="_Toc368316522"><span lang=EN-US>第四章<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>语法分析</span></a></h2>
+
+<h3><a name="_Toc368316523"><span lang=EN-US>第一节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>快速定位词法语法分析的位置的常用方法</span></a></h3>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>搜索</span><span
 lang=EN-US style='font-size:14.0pt'> .g</span><span style='font-size:14.0pt;
@@ -245,6 +529,9 @@ style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
+<h3><a name="_Toc368316524"><span lang=EN-US>第二节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>语法文件之间的关系</span></a></h3>
+
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>翻阅几个</span><span
 lang=EN-US style='font-size:14.0pt'>.g</span><span style='font-size:14.0pt;
 font-family:宋体'>文件可以得知</span></p>
@@ -271,6 +558,15 @@ lang=EN-US style='font-size:14.0pt'>identifier</span><span style='font-size:
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>关系图</span><span
+lang=EN-US style='font-size:14.0pt'>:</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'><img width=554
+height=273 id="图片 9" src="hive词法语法解析分析.files/image003.png"
+alt="gfile_relation.dot.png"></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>熟悉</span><span
 lang=EN-US style='font-size:14.0pt'>antlr v3</span><span style='font-size:14.0pt;
 font-family:宋体'>的朋友一般会奇怪，为什么这里的词法语法怎么不是在一个文件，或者词法语法结对出现呢？</span><span
@@ -294,7 +590,8 @@ FromClauseParser.g, IdentifiersParser.g</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+<h3><a name="_Toc368316525"><span lang=EN-US>第三节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>静态分析语法文件的方法</span></a></h3>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体'>分析一个词法语法的实现，最好的方式是跟随着语法规则走读一边逐一标注。</span></p>
 
@@ -314,8 +611,8 @@ style='font-size:14.0pt'> </span></p>
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>hivelexer</span><span
 style='font-size:14.0pt;font-family:宋体'>不需要关注太多，就是识别关键字和</span><span
 lang=EN-US style='font-size:14.0pt'>token</span><span style='font-size:14.0pt;
-font-family:宋体'>的，重点是</span><span lang=EN-US style='font-size:14.0pt'>
-hiveparser</span><span style='font-size:14.0pt;font-family:宋体'>。</span></p>
+font-family:宋体'>的，重点是</span><span lang=EN-US style='font-size:14.0pt'> hiveparser</span><span
+style='font-size:14.0pt;font-family:宋体'>。</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
@@ -501,14 +798,14 @@ style='font-size:14.0pt'>execStatement </span><span style='font-size:14.0pt;
 font-family:宋体'>由</span><span style='font-size:14.0pt'> </span><span
 style='font-size:14.0pt;font-family:宋体'>查询，装载，导出，导入，数据定义</span><span
 style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
-宋体'>四大语句据称。</span></p>
+宋体'>四大语句。</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>execStatement</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
-msgs.push(&quot;statement&quot;); }</span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init { msgs.push(&quot;statement&quot;);
+}</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
 msgs.pop(); }</span></p>
@@ -570,8 +867,8 @@ style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>exportStatement</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init { msgs.push(&quot;export
-statement&quot;); }</span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
+msgs.push(&quot;export statement&quot;); }</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
 msgs.pop(); }</span></p>
@@ -595,11 +892,11 @@ style='font-size:14.0pt'> </span><span style='font-size:14.0pt;font-family:
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>importStatement</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init {
-msgs.push(&quot;import statement&quot;); }</span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@init { msgs.push(&quot;import
+statement&quot;); }</span></p>
 
-<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after { msgs.pop();
-}</span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>@after {
+msgs.pop(); }</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
 KW_IMPORT ((ext=KW_EXTERNAL)? KW_TABLE (tab=tableOrPartition))? KW_FROM
@@ -612,6 +909,9 @@ KW_IMPORT ((ext=KW_EXTERNAL)? KW_TABLE (tab=tableOrPartition))? KW_FROM
 ;</span></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>以此类推，不再累述。</span></p>
+
+<h3><a name="_Toc368316526"><span lang=EN-US>第四节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>动态分析语法文件的方法</span></a></h3>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>这里介绍一种更为直观的的方法，把</span><span
 lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>.g</span><span
@@ -630,7 +930,7 @@ lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>)</span></p
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'><img width=460 height=80 id="图片 1"
-src="hive词法语法解析分析.files/image001.png"></span></p>
+src="hive词法语法解析分析.files/image004.png"></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
@@ -646,14 +946,14 @@ lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p
 
 <p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
 style='font-size:12.0pt;font-family:宋体'><img width=658 height=582 id="图片 4"
-src="hive词法语法解析分析.files/image002.jpg"></span></p>
+src="hive词法语法解析分析.files/image005.jpg"></span></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>生成的抽象语法树</span><span
 lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
 
 <p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
 style='font-size:12.0pt;font-family:宋体'><img width=630 height=365 id="图片 6"
-src="hive词法语法解析分析.files/image003.jpg"></span></p>
+src="hive词法语法解析分析.files/image006.jpg"></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
@@ -662,12 +962,40 @@ color:black'>&nbsp;</span></p>
 lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'> .g</span><span
 style='font-size:14.0pt;font-family:宋体;color:black'>文件，可直接使用。</span></p>
 
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>好吧，如果你真的读完了，你所能得到的也只是</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>hive ql</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>手册能提供的语法功能，当然，额外奖励是，你知道这些功能是如何更具体的被描述的。</span></p>
+
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
 
-<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>执行计划的生成与优化</span><span
-lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'> -- to be
-continue.</span></p>
+<h2><a name="_Toc368316527"><span lang=EN-US>第五章<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>语义分析阶段</span></a></h2>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>从</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>hive</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>官方结构图也能看出来，</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>driver</span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>类是关键。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>本章节按照处理流程图中的阶段依次展开。</span></p>
+
+<h3><a name="_Toc368316528"><span lang=EN-US>第一节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>语义处理模块的关系</span></a></h3>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>语义模块的输入是一个抽象语法树，</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>输出也是一个抽象语法树，但是被修剪变换过的</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>hive</span><span style='font-size:14.0pt;font-family:宋体;
+color:black'>采用了工厂模式来实现语义模块之间的关系。</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>工厂根据抽象语法树的根节点来生产具体的语义处理器。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
@@ -677,6 +1005,14 @@ color:black'>&nbsp;</span></p>
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>https://cwiki.apache.org/confluence/display/Hive/GettingStarted</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>https://cwiki.apache.org/confluence/display/Hive/GettingStarted+EclipseSetup</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt'>&nbsp;</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
