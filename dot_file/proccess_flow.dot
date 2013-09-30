@@ -1,0 +1,80 @@
+digraph G {
+node[fontname="FangSong"];
+edge[fontname="FangSong"];
+graph[fontname="FangSong"];
+label="drive的主要过程 \n Driver.runInternal() 方法中";
+
+node [style = filled, color = black, shape = box, fillcolor = lightgrey ];
+compound=true;
+subgraph cluster_total{
+
+	predriverrun [ label = " 任务执行时的钩子中的执行前方法 \n hive.exec.driver.run.hooks 配置的hook的preDriverRun方法 \n 很奇怪的方式 后面钩子都是执行前后分开的独立类 \n 这里却只是同一个类的独立方法"];
+
+        subgraph cluster_a{
+	       label="编译过程 \n Driver.compile() 方法中 主要是词法和语法解析 \n 以及语义分析和生成并优化执行计划";
+
+
+		subgraph cluster_aa1 {
+			label = "语法分析 \n ParseDriver.Parse() 中完成";
+			color=blue;
+			node [style=filled,color=black,shape=box,fillcolor=lightgrey];
+
+			lexer [ label = " 词法解析 \n HiveLexerX 一个经过包装的词法解析器"];
+			parser [ label = "语法解析并生成抽象语法树 \n HiveParser 纯粹的语法解析与转换 "];
+
+			
+			lexer -> parser;		
+					
+		}
+
+		subgraph cluster_aa2 {
+			label = "语义分析\nBaseSemanticAnalyzer.Analyze()->具体子类中的analyzeInternal()方法";
+			color = blue;
+			node [ style = filled, color = black, shape = box, fillcolor = lightgrey];
+
+			ppa [ label = "processPositionAlias\n处理位置别名"];
+			actc [ label = "analyze create table command\n分析创建表格命令"];
+			acvc [ label = "analyze create table command\n分析创建表格命令"];
+			phase1 [ label = "dophase1\n第一阶段分析"];
+			genplan [ label = "genplan\n产生执行计划"];
+			optimizer [ label = "optimizer\n根据选项设置的优化器进行优化"];
+			mapreducecompiler [ label = "mapreducecompiler\n产生mr执行计划"];		
+
+
+			ppa -> actc -> acvc -> phase1 -> genplan -> optimizer -> mapreducecompiler;
+			
+		}
+	}
+
+
+
+	subgraph cluster_b {
+		label = "执行过程\nDriver.execute方法";
+		color = blue;
+		node [ style = filled, color = black, shape = box, fillcolor = lightgrey];
+
+		prehook [ label = "执行前的钩子\n配置文件中的hive.exec.pre.hooks配置"];
+		launchtask [ label = "从可执行任务队列中取任务执行\nlaunchTask方法"];
+		polltasks [ label = "检查执行完成的任务\npollTasks方法"];
+		backtasks [ label = "判断是否将备份任务加入可执行任务队列"];
+		failurehook [ label = "任务失败时执行失败钩子\n配置文件中hive.exec.failure.hooks配置"];
+		addchildtask [ label = "添加子任务到可执行任务队列\n配置文件中hive.exec.failure.hooks配置"];
+		posthook [ label = "执行后钩子\n配置文件中hive.exec.post.hooks配置"];
+		 
+
+		prehook -> launchtask -> polltasks -> backtasks -> failurehook -> addchildtask -> posthook ;
+		addchildtask -> launchtask;
+	
+	}
+
+	postdriverrun [ shape = box , label = " 任务执行时的钩子中的执行后方法 \n hive.exec.driver.run.hooks 配置的hook的postDriverRun方法 "];
+
+	edge[minlen=2];
+
+	predriverrun -> lexer [ lhead  = cluster_a ];
+	parser -> ppa [ ltail = cluster_aa1 , lhead = cluster_aa2];
+	mapreducecompiler -> prehook [ ltail = cluster_a , lhead = cluster_b] ;
+
+	posthook -> postdriverrun [ ltail = cluster_b ];
+}
+}
