@@ -1,0 +1,33 @@
+digraph "Fast-forward"
+{
+node[fontname="FangSong"  shape= box];
+edge[fontname="FangSong"];
+graph[fontname="FangSong"];
+
+
+    
+    subgraph c1 {
+        rank="same";
+        
+	a[ label = "ExplainSemanticAnalyzer \n 只分析执行计划" ]
+	b[ label = "LoadSemanticAnalyzer \n 装载语句的语义解析" ]
+	c[ label = "ExportSemanticAnalyzer \n 导出语句的语义解析" ]
+	d[ label = "ImportSemanticAnalyzer \n 导入语句的语义解析" ]
+	e[ label = "DDLSemanticAnalyzer \n 数据定义语言的语义解析" ]
+	f[ label = "FunctionSemanticAnalyzer \n 函数的语义解析" ]
+	g[ label = "ColumnStatsSemanticAnalyzer \n 列统计语义分析" ]
+	h[ label = "MacroSemanticAnalyzer \n 宏语义分析" ]
+	i[ label = "SemanticAnalyzer \n 常用的语义分析，主要是查询之类的" ]
+
+        
+    }
+   
+
+    ast[ label = "抽象语法树" ];
+    factory[ label = "语义分析器工厂" ];
+    basesemalyzer [ label = "语义分析器基类 \n BaseSemanticAnalyzer" ];
+
+    ast -> factory [label = "作为参数传给工厂" ];
+    factory -> basesemalyzer [label = "工厂根据树节点类型确定具体的语义分析器" ];
+    basesemalyzer -> {a,b,c,d,e,f,g,h,i}[dir=back] ;
+}

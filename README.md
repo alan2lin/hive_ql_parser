@@ -1,4 +1,4 @@
-                   hive词法语法解析分析（md版格式已乱 请参考同目录下docx版）
+                   hive词法语法解析分析（md版格式已乱，请参阅docx版）
 
   
 
@@ -393,9 +393,65 @@ importStatement
 
 hive采用了工厂模式来实现语义模块之间的关系。
 
-工厂根据抽象语法树的根节点来生产具体的语义处理器。
+工厂根据抽象语法树的根节点来生产具体的语义处理器。如图:
+
+![semantic.dot.png](hive词法语法解析分析.files/image007.png)
 
  
+
+各个具体实现类的具体意义如表格所示:
+
+语义分析器的实现类
+
+实现意义
+
+ExplainSemanticAnalyzer
+
+只分析执行计划
+
+LoadSemanticAnalyzer
+
+装载语句的语义解析
+
+ExportSemanticAnalyzer
+
+导出语句的语义解析
+
+ImportSemanticAnalyzer
+
+导入语句的语义解析
+
+DDLSemanticAnalyzer
+
+数据定义语言的语义解析
+
+FunctionSemanticAnalyzer
+
+函数的语义解析
+
+ColumnStatsSemanticAnalyzer
+
+列统计语义分析
+
+MacroSemanticAnalyzer
+
+宏语义分析
+
+SemanticAnalyzer
+
+常用的语义分析，主要是查询。
+
+ 
+
+具体的语义处理器与根节点的操作类型的对应关系
+
+![tok2analyzer.dot.png](hive词法语法解析分析.files/image008.png)
+
+ 
+
+由于具体的实现非常多，所以这里只抽取了最常见的 SemanticAnalyzer 做具体的解析。其他的具体语义分析器，有时间我们再继续。
+
+### 第二节         SemanticAnalyzer的实现过程
 
  
 

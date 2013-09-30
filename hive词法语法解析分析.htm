@@ -929,8 +929,7 @@ lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>)</span></p
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>如</span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
-color:black'><img width=460 height=80 id="图片 1"
-src="hive词法语法解析分析.files/image004.png"></span></p>
+color:black'><img width=460 height=80 src="hive词法语法解析分析.files/image004.png"></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
@@ -945,7 +944,7 @@ a.foo FROM invites a WHERE a.ds='2008-08-15'</span></span></p>
 lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
 
 <p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
-style='font-size:12.0pt;font-family:宋体'><img width=658 height=582 id="图片 4"
+style='font-size:12.0pt;font-family:宋体'><img width=658 height=582
 src="hive词法语法解析分析.files/image005.jpg"></span></p>
 
 <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>生成的抽象语法树</span><span
@@ -992,10 +991,161 @@ lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>.</span></p
 color:black'>hive</span><span style='font-size:14.0pt;font-family:宋体;
 color:black'>采用了工厂模式来实现语义模块之间的关系。</span></p>
 
-<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>工厂根据抽象语法树的根节点来生产具体的语义处理器。</span></p>
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>工厂根据抽象语法树的根节点来生产具体的语义处理器。如图</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'><img width=555 height=160 id="图片 1"
+src="hive词法语法解析分析.files/image007.png" alt=semantic.dot.png></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>各个具体实现类的具体意义如表格所示</span><span
+lang=EN-US style='font-size:14.0pt;font-family:Consolas;color:black'>:</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=603
+ style='width:451.95pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>语义分析器的实现类</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border:solid black 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>实现意义</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>ExplainSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>只分析执行计划</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>LoadSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>装载语句的语义解析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>ExportSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>导出语句的语义解析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>ImportSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>导入语句的语义解析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>DDLSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>数据定义语言的语义解析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>FunctionSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>函数的语义解析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>ColumnStatsSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>列统计语义分析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>MacroSemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>宏语义分析</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=304 valign=top style='width:227.65pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+  color:black;background:silver'>SemanticAnalyzer</span></p>
+  </td>
+  <td width=299 valign=top style='width:224.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>常用的语义分析，主要是查询。</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>具体的语义处理器与根节点的操作类型的对应关系</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'><img width=554 height=298 id="图片 4"
+src="hive词法语法解析分析.files/image008.png" alt=tok2analyzer.dot.png></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
+color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:宋体;color:black'>由于具体的实现非常多，所以这里只抽取了最常见的</span><span
+style='font-size:14.0pt;font-family:Consolas;color:black'> <span lang=EN-US
+style='background:silver'>SemanticAnalyzer</span><span lang=EN-US> </span></span><span
+style='font-size:14.0pt;font-family:宋体;color:black'>做具体的解析。其他的具体语义分析器，有时间我们再继续。</span></p>
+
+<h3><span lang=EN-US>第二节<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>SemanticAnalyzer</span><span style='font-family:
+宋体'>的实现过程</span></h3>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:Consolas;
 color:black'>&nbsp;</span></p>

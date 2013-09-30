@@ -1,3 +1,3 @@
-dot -Tpng -O proccess_flow.dot
-dot -Tsvg -O proccess_flow.dot
-dot -Tpng -O gfile_relation.dot
+for /R %%s in (*.dot) do (
+dot -Tpng -O %%s
+)
