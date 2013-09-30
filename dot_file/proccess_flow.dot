@@ -2,11 +2,12 @@ digraph G {
 node[fontname="FangSong"];
 edge[fontname="FangSong"];
 graph[fontname="FangSong"];
-label="drive的主要过程 \n Driver.runInternal() 方法中";
+
 
 node [style = filled, color = black, shape = box, fillcolor = lightgrey ];
 compound=true;
 subgraph cluster_total{
+label="drive的主要过程 \n Driver.runInternal() 方法中";
 
 	predriverrun [ label = " 任务执行时的钩子中的执行前方法 \n hive.exec.driver.run.hooks 配置的hook的preDriverRun方法 \n 很奇怪的方式 后面钩子都是执行前后分开的独立类 \n 这里却只是同一个类的独立方法"];
 
