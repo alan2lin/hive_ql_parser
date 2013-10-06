@@ -1,0 +1,11 @@
+digraph "query block"
+{
+node[fontname="FangSong"  shape= box];
+edge[fontname="FangSong"];
+graph[fontname="FangSong" rankdir = "LR"];
+
+
+a [ label = ""];
+    
+
+}

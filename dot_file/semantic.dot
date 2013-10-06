@@ -1,4 +1,4 @@
-digraph "Fast-forward"
+digraph "semantic"
 {
 node[fontname="FangSong"  shape= box];
 edge[fontname="FangSong"];

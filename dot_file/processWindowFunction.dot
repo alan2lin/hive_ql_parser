@@ -1,0 +1,47 @@
+digraph "processwindowFunction"
+{
+node[fontname="FangSong"  shape= box];
+edge[fontname="FangSong"];
+graph[fontname="FangSong" rankdir = "LR"];
+
+subgraph cluster_all{
+label="用以描述窗口函数处理的结构";
+
+
+
+
+WindowingSpec[label="WindowingSpec\n在一个特定的查询内的window处理的描述类 |{<aliasToWdwExpr> aliasToWdwExpr | <aliasToWdwExprDesc> 别名与窗口表达式的映射表} |{<windowSpecs> windowSpecs | <windowSpecsDesc> 窗口名与窗口对象描述类映射表 } |{<windowExpressions> windowExpressions | <windowExpressionsDesc> 窗口表达式列表} " shape = record];
+
+aliasToWdwExpr[label="哈希表\n别名与窗口表达式的映射表 |{别名|窗口表达式}|{ | } |{ | <WindowExpressionSpecDesc>}" shape = record];
+
+WindowExpressionSpec[label="WindowExpressionSpec\n描述分窗口时上下文中的select语句 |{<alias> alias | <aliasDesc> 别名 } | {<expression> expression | <expressionDesc> 抽象树形式的表达式} " shape = record];
+
+windowSpecs[label="哈希表\n窗口名与窗口对象描述类映射表 |{别名|窗口对象}|{ | } |{ | <WindowSpecDesc>}" shape = record];
+
+
+
+
+WindowFunctionSpec[label="WindowFunctionSpec\n窗口函数说明类|父类区域|{<alias> alias | <aliasDesc> 别名} |{<expression> expression | <expressionDesc> 表达式树} |本类区域|{<name> name | <nameDesc> 名字 } |{<isStar> isStar | <isStarDesc> 参数为*} |{<isDistinct> isDistinct | <isDistinctDesc> distinct修饰} |{<args> args | <argsDesc> 参数列表} |{<windowSpec> windowSpec | <windowSpecDesc> 窗口声明} " shape = record];
+
+WindowSpec[label="WindowSpec\n窗口说明类|{<sourceId> sourceId | <sourceIdDesc> 一个窗口可以通过名字引用源窗口\n这个记录源窗口id} |{<partitioning> partitioning | <partitioningDesc> 分区描述} |{<windowFrame> windowFrame | <windowFrameDesc> 窗口帧}" shape = record];
+
+WindowFrameSpec[label="WindowFrameSpec\n窗口帧类\n只用来声明当前行的窗口可见的范围|{<start> start | <startDesc>} |{<end> end | <endDesc> } " shape = record];
+
+PartitioningSpec[label="PartitioningSpec\n分区时描述类\n描述ptf函数的输入是如何分区和排序的 | {<partSpec> partSpec | <partSpecDesc> ASTNode表达式的列表} |{<orderSpec> orderSpec | <orderSpecDesc> 升序降序枚举类的表达式的列表 } " shape = record];
+
+
+WindowingSpec:aliasToWdwExprDesc -> aliasToWdwExpr;
+WindowingSpec:windowExpressionsDesc -> WindowExpressionSpec;
+aliasToWdwExpr:WindowExpressionSpecDesc -> WindowExpressionSpec;
+
+
+WindowingSpec:windowSpecsDesc ->windowSpecs;
+windowSpecs:WindowSpecDesc ->WindowSpec;
+
+
+WindowFunctionSpec:windowSpecDesc->WindowSpec;
+WindowSpec:windowFrameDesc->WindowFrameSpec;
+WindowSpec:partitioningDesc->PartitioningSpec;
+}
+    
+}
