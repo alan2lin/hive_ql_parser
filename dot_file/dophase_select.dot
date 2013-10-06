@@ -4,11 +4,18 @@ node[fontname="FangSong"  shape= box];
 edge[fontname="FangSong"];
 graph[fontname="FangSong" rankdir = "LR"];
 
-subgraph cluster_all{
-    
-qb [ label = " query block | {  名字  | 解释}| {<numJoins> numJoins  |<numJoinsDesc> 连接数}| {<numGbys> numGbys  |<numGbysDesc>  }| {<numSels> numSels  |<numSelsDesc> select从句数量}| {<numSelDi> numSelDi  |<numSelDiDesc> select distinct 从句数量}| {<aliasToTabs> aliasToTabs |<aliasToTabsDesc>表别名映射表}| {<aliasToSubq> aliasToSubq  |<aliasToSubqDesc>子查询别名映射表}| {<aliasToProps> aliasToProps  |<aliasToPropsDesc>属性别名映射表}| {<aliases> aliases  |<aliasesDesc>别名列表}| {<qbp> qbp  |<qbpDesc>解析信息结构}| {<qbm> qbm  |<qbmDesc>元信息结构}| {<qbjoin> qbjoin  |<qbjoinDesc>连接树}| {<id> id  |<idDesc> id}| {<isQuery> isQuery  |<isQueryDesc>是否查询}| {<isAnalyzeRewrite> isAnalyzeRewrite  |<isAnalyzeRewriteDesc> 是否分析重写}| {<tblDesc> tblDesc  |<tblDescDesc>表描述}| {<localDirectoryDesc> localDirectoryDesc  |<localDirectoryDescDesc>本地目录描述 }|{<ptfNodeToSpec> ptfNodeToSpec |<ptfNodeToSpecDesc>}|{<destToWindowingSpec> destToWindowingSpec |<destToWindowingSpecDesc>目标列区对应的窗口描述}" shape = "record" ];
 
-qbp [label = "查询块解析信息|{<isSubQ> isSubQ |<isSubQDesc>是否子查询}| {<alias> alias |<aliasDesc>别名}| {<joinExpr> joinExpr  |<joinExprDesc>连接表达式对应\n的抽象语法树节点}| {<hints> hints |<hintsDesc>提示对应的抽象\n语法树节点}| {<aliasToSrc> aliasToSrc |<aliasToSrcDesc>}| {<nameToDest> nameToDest |<nameToDestDesc>}| {<nameToSample> nameToSample |<nameToSampleDesc>}| {<exprToColumnAlias> exprToColumnAlias |<exprToColumnAliasDesc>别名节点与别名映射关系}| {<destToSelExpr> destToSelExpr |<destToSelExprDesc> 目标对应的selct从句}| {<destToWhereExpr> destToWhereExpr |<destToWhereExprDesc>}| {<destToGroupby> destToGroupby |<destToGroupbyDesc>}| {<destRollups> destRollups |<destRollupsDesc>}| {<destCubes> destCubes |<destCubesDesc>}| {<destGroupingSets> destGroupingSets |<destGroupingSetsDesc>}| {<destToHaving> destToHaving |<destToHavingDesc>}| {<insertIntoTables> insertIntoTables |<insertIntoTablesDesc>}| {<isAnalyzeCommand> isAnalyzeCommand |<isAnalyzeCommandDesc>是否分析命令 }| {<isInsertToTable> isInsertToTable |<isInsertToTableDesc>是否插入表格}| {<isNoScanAnalyzeCommand> isNoScanAnalyzeCommand |<isNoScanAnalyzeCommandDesc>是否非扫描分析命令}| {<isPartialScanAnalyzeCommand> isPartialScanAnalyzeCommand |<isPartialScanAnalyzeCommandDesc>是否部分扫描分析命令}| {<tableSpecs> tableSpecs |<tableSpecsDesc> }| {<tableName> tableName |<tableNameDesc>}| {<colName> colName |<colNameDesc>列名列表  }| {<colType> colType |<colTypeDesc>列类型列表}| {<partName> partName |<partNameDesc>  }| {<isTblLvl> isTblLvl |<isTblLvlDesc> }| {<destToClusterby> destToClusterby |<destToClusterbyDesc>}| {<destToDistributeby> destToDistributeby |<destToDistributebyDesc>}| {<destToSortby> destToSortby |<destToSortbyDesc>}| {<aliasToLateralViews> aliasToLateralViews |<aliasToLateralViewsDesc>}| {<destToLateralView> destToLateralView |<destToLateralViewDesc>}| {<destToOrderby> destToOrderby |<destToOrderbyDesc>}| {<destToLimit> destToLimit |<destToLimitDesc>}| {<outerQueryLimit> outerQueryLimit |<outerQueryLimitDesc>}| {<destToAggregationExprs> destToAggregationExprs |<destToAggregationExprsDesc> 目标到聚集函数的映射}| {<destToDistinctFuncExprs> destToDistinctFuncExprs |<destToDistinctFuncExprsDesc> 目标与distinct的映射关系}| {<destToWindowingExprs> destToWindowingExprs |<destToWindowingExprsDesc> 目标对应的窗口处理描述类}" shape=record];
+
+
+subgraph cluster_all{
+label = " 语义分析时所涉及的上下文内容 ";
+
+//subgraph cluster_a{
+//label = " 上下文内容 ";
+
+qb [ label = " qb[query block]\n查询块区| {  名字  | 解释}| {<numJoins> numJoins  |<numJoinsDesc> 连接数}| {<numGbys> numGbys  |<numGbysDesc>  }| {<numSels> numSels  |<numSelsDesc> select从句数量}| {<numSelDi> numSelDi  |<numSelDiDesc> select distinct 从句数量}| {<aliasToTabs> aliasToTabs |<aliasToTabsDesc>表别名映射表}| {<aliasToSubq> aliasToSubq  |<aliasToSubqDesc>子查询别名映射表}| {<aliasToProps> aliasToProps  |<aliasToPropsDesc>属性别名映射表}| {<aliases> aliases  |<aliasesDesc>别名列表}| {<qbp> qbp  |<qbpDesc>解析信息结构}| {<qbm> qbm  |<qbmDesc>元信息结构}| {<qbjoin> qbjoin  |<qbjoinDesc>连接树}| {<id> id  |<idDesc> id}| {<isQuery> isQuery  |<isQueryDesc>是否查询}| {<isAnalyzeRewrite> isAnalyzeRewrite  |<isAnalyzeRewriteDesc> 是否分析重写}| {<tblDesc> tblDesc  |<tblDescDesc>表描述}| {<localDirectoryDesc> localDirectoryDesc  |<localDirectoryDescDesc>本地目录描述 }|{<ptfNodeToSpec> ptfNodeToSpec |<ptfNodeToSpecDesc>}|{<destToWindowingSpec> destToWindowingSpec |<destToWindowingSpecDesc>目标列区对应的窗口描述}" shape = "record" ];
+
+qbp [label = "qbp[paserinfo of qb]\n查询块解析信息|{<isSubQ> isSubQ |<isSubQDesc>是否子查询}| {<alias> alias |<aliasDesc>别名}| {<joinExpr> joinExpr  |<joinExprDesc>连接表达式对应\n的抽象语法树节点}| {<hints> hints |<hintsDesc>提示对应的抽象\n语法树节点}| {<aliasToSrc> aliasToSrc |<aliasToSrcDesc>}| {<nameToDest> nameToDest |<nameToDestDesc>}| {<nameToSample> nameToSample |<nameToSampleDesc>}| {<exprToColumnAlias> exprToColumnAlias |<exprToColumnAliasDesc>别名节点与别名映射关系}| {<destToSelExpr> destToSelExpr |<destToSelExprDesc> 目标对应的selct从句}| {<destToWhereExpr> destToWhereExpr |<destToWhereExprDesc>}| {<destToGroupby> destToGroupby |<destToGroupbyDesc>}| {<destRollups> destRollups |<destRollupsDesc>}| {<destCubes> destCubes |<destCubesDesc>}| {<destGroupingSets> destGroupingSets |<destGroupingSetsDesc>}| {<destToHaving> destToHaving |<destToHavingDesc>}| {<insertIntoTables> insertIntoTables |<insertIntoTablesDesc>}| {<isAnalyzeCommand> isAnalyzeCommand |<isAnalyzeCommandDesc>是否分析命令 }| {<isInsertToTable> isInsertToTable |<isInsertToTableDesc>是否插入表格}| {<isNoScanAnalyzeCommand> isNoScanAnalyzeCommand |<isNoScanAnalyzeCommandDesc>是否非扫描分析命令}| {<isPartialScanAnalyzeCommand> isPartialScanAnalyzeCommand |<isPartialScanAnalyzeCommandDesc>是否部分扫描分析命令}| {<tableSpecs> tableSpecs |<tableSpecsDesc> }| {<tableName> tableName |<tableNameDesc>}| {<colName> colName |<colNameDesc>列名列表  }| {<colType> colType |<colTypeDesc>列类型列表}| {<partName> partName |<partNameDesc>  }| {<isTblLvl> isTblLvl |<isTblLvlDesc> }| {<destToClusterby> destToClusterby |<destToClusterbyDesc>}| {<destToDistributeby> destToDistributeby |<destToDistributebyDesc>}| {<destToSortby> destToSortby |<destToSortbyDesc>}| {<aliasToLateralViews> aliasToLateralViews |<aliasToLateralViewsDesc>}| {<destToLateralView> destToLateralView |<destToLateralViewDesc>}| {<destToOrderby> destToOrderby |<destToOrderbyDesc>}| {<destToLimit> destToLimit |<destToLimitDesc>}| {<outerQueryLimit> outerQueryLimit |<outerQueryLimitDesc>}| {<destToAggregationExprs> destToAggregationExprs |<destToAggregationExprsDesc> 目标到聚集函数的映射}| {<destToDistinctFuncExprs> destToDistinctFuncExprs |<destToDistinctFuncExprsDesc> 目标与distinct的映射关系}| {<destToWindowingExprs> destToWindowingExprs |<destToWindowingExprsDesc> 目标对应的窗口处理描述类}" shape=record];
 qbm [label = "{<aliasToTable> aliasToTable |<aliasToTableDesc>表别名映射表}| {<nameToDestTable> nameToDestTable |<nameToDestTableDesc>目标表名字映射表}| {<nameToDestPartition> nameToDestPartition |<nameToDestPartitionDesc>目标分区名字映射表}| {<nameToDestFile> nameToDestFile |<nameToDestFileDesc>目标文件名字映射表}| {<nameToDestType> nameToDestType |<nameToDestTypeDesc>目标类型名字映射表}| {<aliasToPartSpec> aliasToPartSpec |<aliasToPartSpecDesc>}| {<aliasToDPCtx> aliasToDPCtx |<aliasToDPCtxDesc>动态分区上下文别名映射表}" shape=record];
 
 tbldesc [label ="{<databaseName> databaseName |<databaseNameDesc>数据库名}|{<tableName> tableName |<tableNameDesc>表名}|{<isExternal> isExternal |<isExternalDesc>是否外部表}|{<cols> cols |<colsDesc>属性表}|{<partCols> partCols |<partColsDesc>分区属性表}|{<bucketCols> bucketCols |<bucketColsDesc>桶属性表}|{<sortCols> sortCols |<sortColsDesc>排序属性表}|{<numBuckets> numBuckets |<numBucketsDesc>桶数量}|{<fieldDelim> fieldDelim |<fieldDelimDesc>属性分隔符}|{<fieldEscape> fieldEscape |<fieldEscapeDesc>属性转义}|{<collItemDelim> collItemDelim |<collItemDelimDesc>}|{<mapKeyDelim> mapKeyDelim |<mapKeyDelimDesc>}|{<lineDelim> lineDelim |<lineDelimDesc>行分隔符}|{<comment> comment |<commentDesc>注释}|{<inputFormat> inputFormat |<inputFormatDesc>输入格式}|{<outputFormat> outputFormat |<outputFormatDesc>输出格式}|{<location> location |<locationDesc>位置}|{<serName> serName |<serNameDesc>系列化名字}|{<storageHandler> storageHandler |<storageHandlerDesc>存储处理}|{<serdeProps> serdeProps |<serdePropsDesc>序列化凡序列化属性映射表}|{<tblProps> tblProps |<tblPropsDesc>表属性映射表}|{<ifNotExists> ifNotExists |<ifNotExistsDesc>是否存在标志}|{<skewedColNames> skewedColNames |<skewedColNamesDesc>}|{<skewedColValues> skewedColValues |<skewedColValuesDesc>}|{<isStoredAsSubDirectories> isStoredAsSubDirectories |<isStoredAsSubDirectoriesDesc>}"  shape=record];
@@ -29,29 +36,41 @@ qb:qbjoinDesc->"连接树";
 qb:tblDescDesc->tbldesc;
 qb:localDirectoryDescDesc->tbldesc;
 
+//}
 
 ////////////
 
-subgraph cluster_a{
+subgraph cluster_aa1{
 	label="dophase1处理TOK_SELECT TOK_SELECTDI";
-	color=grey;
 	
-
 	select_step1 [label="\N 设置select从句对应的节点"];
 
-	subgraph cluster_aa1{
-		label="doPhase1GetAggregationsFromSelect";
+	subgraph cluster_aaa1{
+		color=invis;
+		label="";
 
-		subgraph cluster_aaa1{
-			label = "doPhase1GetAllAggregations";		
-			select_step2 [label="\N 对所传入的每一个节点\n递归找出聚集语句和窗口语句\n同时消除重复聚集语句"];
+		subgraph cluster_aaaa1{
+			label="doPhase1GetAggregationsFromSelect";
+			color=black;
+
+			subgraph cluster_aaaa1{
+				label = "doPhase1GetAllAggregations";		
+				select_step2 [label="\N 对所传入的每一个节点\n递归找出聚集语句和窗口语句\n同时消除重复聚集语句"];
+			}
+			select_step3 [label="\N 处理基于窗口的聚集函数"];
 		}
-		select_step3 [label="\N 处理基于窗口的聚集函数"];
+		subgraph cluster_aaaa2{
+			color=invis;
+			label="";
+
+			select_step4 [label="\N doPhase1GetColumnAliasesFromSelect\n寻找列别名并设置树节点与列别名对应关系"];
+			select_step5 [label="\N 设置目标与聚集表达式关系\n寻找出distinct节点后\n设置目标与distinct函数关系"];
+		}
 	}
-	select_step4 [label="\N doPhase1GetColumnAliasesFromSelect\n寻找列别名并设置树节点与列别名对应关系"];
-	select_step5 [label="\N 设置目标与聚集表达式关系\n寻找出distinct节点后\n设置目标与distinct函数关系"];
 
 
+
+ select_step1 -> select_step2 -> select_step3 -> select_step4 -> select_step5[constraint=false minlen=2 ];
 }
 
 edge[color=red];
@@ -70,20 +89,12 @@ select_step5 -> qbp:destToAggregationExprs[label="select_step5-1 "];
 select_step5 -> qbp:destToDistinctFuncExprs[label="select_step5-2 "];
 
 
+edge[color=black];
+
 }
 
 
-edge[color=black];
- select_step1 -> select_step2 -> select_step3 -> select_step4 -> select_step5;
- //select_step1 -> select_step2 -> select_step3 -> select_step4 -> select_step5[constraint=false weight=0];
- select_step1 -> select_step2 [constraint=false weight=1];
- select_step2 -> select_step3 [constraint=false weight=2];
- select_step3 -> select_step4 [constraint=false  weight=3];
- select_step4 -> select_step5 [constraint=false weight=4 ];
 
-
-//{rank=same;select_step1;select_step2;select_step3;select_step4;select_step5;}
-//{rankdir=TB;rank=same;select_step1;select_step2;select_step3;select_step4;select_step5;}
 
 }
 
