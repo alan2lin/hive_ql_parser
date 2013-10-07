@@ -40,53 +40,48 @@ qb:localDirectoryDescDesc->tbldesc;
 
 ////////////
 
-subgraph cluster_aa1{
-	label="dophase1处理TOK_SELECT TOK_SELECTDI";
+
+///////////////////////////////////
+
+subgraph cluster_aa2{
+	label="dophase1的其他tok的处理\n简单设置节点的就集中在一起处理";
 	
-	select_step1 [label="\N 设置select从句对应的节点"];
+	rest_tok [label="剩下的tokens|<TOK_WHERE>TOK_WHERE|<TOK_INSERT_INTO>TOK_INSERT_INTO|<TOK_DESTINATION>TOK_DESTINATION|<TOK_CLUSTERBY>TOK_CLUSTERBY|<TOK_DISTRIBUTEBY>TOK_DISTRIBUTEBY|<TOK_SORTBY>TOK_SORTBY|<TOK_ORDERBY>TOK_ORDERBY|<TOK_GROUPBY>TOK_GROUPBY \n TOK_ROLLUP_GROUPBY \n TOK_CUBE_GROUPBY \n TOK_GROUPING_SETS |<TOK_HAVING>TOK_HAVING|<KW_WINDOW>KW_WINDOW|<TOK_LIMIT>TOK_LIMIT|<TOK_ANALYZE>TOK_ANALYZE|<TOK_UNION>TOK_UNION \n TOK_INSERT |<TOK_LATERAL_VIEW>TOK_LATERAL_VIEW \n TOK_LATERAL_VIEW_OUTER" shape=record];
 
-	subgraph cluster_aaa1{
-		color=invis;
-		label="";
-
-		subgraph cluster_aaaa1{
-			label="doPhase1GetAggregationsFromSelect";
-			color=black;
-
-			subgraph cluster_aaaa1{
-				label = "doPhase1GetAllAggregations";		
-				select_step2 [label="\N 对所传入的每一个节点\n递归找出聚集语句和窗口语句\n同时消除重复聚集语句"];
-			}
-			select_step3 [label="\N 处理基于窗口的聚集函数"];
-		}
-		subgraph cluster_aaaa2{
-			color=invis;
-			label="";
-
-			select_step4 [label="\N doPhase1GetColumnAliasesFromSelect\n寻找列别名并设置树节点与列别名对应关系"];
-			select_step5 [label="\N 设置目标与聚集表达式关系\n寻找出distinct节点后\n设置目标与distinct函数关系"];
-		}
-	}
-
-
-
- select_step1 -> select_step2 -> select_step3 -> select_step4 -> select_step5[constraint=false minlen=2 ];
 }
-edge[color=red];
 
-select_step1 -> qb:numSels[label="select_step1-1 "];
-select_step1 -> qb:numSelDi[label="select_step1-2 "];
-select_step1 -> qbp:destToSelExpr[label="select_step1-3 "];
-select_step1 -> qbp:hints[label="select_step1-4"];
+edge[minlen=3];
 
-select_step3 -> qb:destToWindowingSpec[label="select_step3-1 "];
-select_step3 -> qbp:destToWindowingExprs[label="select_step3-2 "];
+rest_tok:TOK_WHERE -> qbp:destToWhereExpr [color = red];
+rest_tok:TOK_INSERT_INTO -> qbp:insertIntoTables [color = brown];
+rest_tok:TOK_DESTINATION -> qbp:nameToDest [color = blue];
+rest_tok:TOK_CLUSTERBY -> qbp:destToClusterby [color = green];
+rest_tok:TOK_DISTRIBUTEBY -> qbp:destToDistributeby [color = red];
+rest_tok:TOK_SORTBY -> qbp:destToSortby [color = brown];
+rest_tok:TOK_ORDERBY -> qbp:destToOrderby [color = blue];
 
-select_step4 -> qbp:exprToColumnAlias[label="select_step4-1 "];
+rest_tok:TOK_GROUPBY -> qbp:destToGroupby [color = green];
+rest_tok:TOK_GROUPBY -> qbp:destRollups [color = green];
+rest_tok:TOK_GROUPBY -> qbp:destCubes [color = green];
+rest_tok:TOK_GROUPBY -> qbp:destGroupingSets [color = green];
 
-select_step5 -> qbp:destToAggregationExprs[label="select_step5-1 "];
-select_step5 -> qbp:destToDistinctFuncExprs[label="select_step5-2 "];
+rest_tok:TOK_HAVING -> qbp:destToHaving [color = red];
+rest_tok:TOK_HAVING -> qbp:destToAggregationExprs [color = red];
 
+
+rest_tok:TOK_LIMIT -> qbp:destToLimit [color = brown];
+
+rest_tok:TOK_ANALYZE -> qb:aliasToTabs [color = blue];
+rest_tok:TOK_ANALYZE -> qb:aliases [color = blue];
+rest_tok:TOK_ANALYZE -> qbp:isAnalyzeCommand [color = blue];
+rest_tok:TOK_ANALYZE -> qbp:isNoScanAnalyzeCommand [color = blue];
+rest_tok:TOK_ANALYZE -> qbp:isPartialScanAnalyzeCommand [color = blue];
+
+rest_tok:TOK_LATERAL_VIEW -> qbp:destToLateralView [color = green];
+
+
+
+//from KW_WINDOW TOK_INSERT
 
 
 
